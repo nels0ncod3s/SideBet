@@ -108,27 +108,7 @@ h1, h2, h3 {
   isolation: isolate;
 }
 
-.ambient-glow {
-  position: absolute;
-  top: -10%;
-  left: 50%;
-  width: 1100px;
-  height: 900px;
-  transform: translateX(-50%);
-  background:
-    radial-gradient(circle at 35% 20%, rgba(77, 225, 255, 0.16), transparent 55%),
-    radial-gradient(circle at 65% 30%, rgba(139, 92, 246, 0.14), transparent 55%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.ambient-glow::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    repeating-radial-gradient(circle at 50% 28%, transparent 0, transparent 140px, rgba(255, 255, 255, 0.025) 141px, transparent 143px);
-}
+/* ambient background glow removed for a flatter, simpler look */
 
 /* ============================================
    HEADER
@@ -315,8 +295,7 @@ h1, h2, h3 {
   align-items: center;
   gap: 8px;
   color: var(--bg-void);
-  background: linear-gradient(135deg, var(--electric), #7fe9ff);
-  box-shadow: 0 0 0 0 rgba(77, 225, 255, 0.5);
+  background: var(--electric);
 }
 
 .btn-primary svg {
@@ -326,8 +305,7 @@ h1, h2, h3 {
 }
 
 .btn-primary:hover {
-  box-shadow: 0 6px 24px rgba(77, 225, 255, 0.35);
-  transform: translateY(-1px);
+  background: #6fe0fb;
 }
 
 .btn-primary:hover svg {
@@ -411,8 +389,8 @@ section {
   grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: 48px;
-  padding-top: 64px;
-  padding-bottom: 64px;
+  padding-top: 28px;
+  padding-bottom: 56px;
 }
 
 .hero-text {
@@ -475,17 +453,7 @@ section {
   height: 420px;
 }
 
-.visual-glow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 480px;
-  height: 480px;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(77, 225, 255, 0.16), rgba(139, 92, 246, 0.08) 55%, transparent 75%);
-  z-index: 0;
-  pointer-events: none;
-}
+/* glow halo removed */
 
 .device {
   position: absolute;
@@ -509,7 +477,7 @@ section {
   left: 11.5%;
   width: 77%;
   height: 73%;
-  background: linear-gradient(155deg, #162430, #0f1a24 60%, #14202c);
+  background: var(--surface);
   border-radius: 6px 6px 0 0;
   display: flex;
   align-items: flex-start;
@@ -521,15 +489,7 @@ section {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: rgba(77, 225, 255, 0.35);
-}
-
-.screen-dot:nth-child(2) {
-  background: rgba(139, 92, 246, 0.35);
-}
-
-.screen-dot:nth-child(3) {
-  background: rgba(52, 211, 153, 0.35);
+  background: var(--surface-line);
 }
 
 .device-phone {
@@ -661,24 +621,27 @@ section {
    ============================================ */
 .carousel {
   position: relative;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 64px, #000 calc(100% - 64px), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 64px, #000 calc(100% - 64px), transparent);
+}
+
+@media (max-width: 760px) {
+  .carousel {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
 }
 
 .carousel-track {
   display: flex;
   gap: 18px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 8px;
-  scrollbar-width: none;
-}
-
-.carousel-track::-webkit-scrollbar {
-  display: none;
+  width: max-content;
+  will-change: transform;
 }
 
 .bet-card {
   flex: 0 0 auto;
-  scroll-snap-align: start;
   width: 280px;
   background: var(--surface-raised);
   border: 1px solid var(--surface-line);
@@ -687,12 +650,11 @@ section {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.2s ease;
 }
 
 .bet-card:hover {
-  border-color: var(--electric-dim);
-  transform: translateY(-3px);
+  border-color: var(--ink-faint);
 }
 
 .bet-question {
@@ -710,108 +672,146 @@ section {
   margin-top: auto;
 }
 
-.carousel-controls {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 20px;
-}
+/* Mobile: disable the JS marquee transform, restore native swipe/scroll-snap */
+@media (max-width: 760px) {
+  .carousel {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 
-.carousel-btn {
-  width: 38px;
-  height: 38px;
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--surface-line);
-  border-radius: 50%;
-  color: var(--ink-dim);
-  transition: all 0.2s ease;
-}
+  .carousel-track {
+    width: max-content;
+    transform: none !important;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 8px;
+  }
 
-.carousel-btn svg {
-  width: 18px;
-  height: 18px;
-}
-
-.carousel-btn:hover {
-  border-color: var(--electric-dim);
-  color: var(--electric);
+  .bet-card {
+    scroll-snap-align: start;
+    width: 240px;
+  }
 }
 
 /* ============================================
-   HOW IT WORKS — parallax flow
+   HOW IT WORKS — vertical zigzag
    ============================================ */
 .flow-track {
   position: relative;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  max-width: 920px;
+  margin: 0 auto;
 }
 
 .flow-line {
   position: absolute;
-  top: 26px;
-  left: 0;
-  right: 0;
-  height: 2px;
+  top: 8px;
+  bottom: 8px;
+  left: 50%;
+  width: 2px;
   background: var(--surface-line);
+  transform: translateX(-50%);
   z-index: 0;
 }
 
 .flow-line-fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, var(--electric), var(--violet));
-  transition: width 0.1s linear;
+  width: 100%;
+  height: 0%;
+  background: var(--electric);
+  transition: height 0.1s linear;
 }
 
 .flow-step {
   position: relative;
   z-index: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding-top: 8px;
-  opacity: 0.35;
-  transform: translateY(28px) scale(0.97);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  opacity: 0.4;
+  transform: translateY(20px);
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .flow-step.is-active {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: translateY(0);
 }
 
-.flow-marker {
-  width: 52px;
-  height: 52px;
-  display: grid;
-  place-items: center;
-  font-family: var(--font-mono);
-  font-weight: 600;
-  font-size: 0.95rem;
+.flow-node {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--surface-line);
+  transform: translate(-50%, -50%);
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.flow-step.is-active .flow-node {
+  background: var(--electric);
+  border-color: var(--electric);
+}
+
+.flow-card {
+  position: relative;
   background: var(--surface-raised);
   border: 1px solid var(--surface-line);
-  color: var(--ink-faint);
-  transition: all 0.4s ease;
+  border-radius: var(--radius-md);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.flow-step.is-active .flow-marker {
-  color: var(--bg-void);
-  background: linear-gradient(135deg, var(--electric), var(--violet));
-  border-color: transparent;
-  box-shadow: 0 0 0 6px rgba(77, 225, 255, 0.08);
+.flow-icon {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--surface-line);
+  color: var(--ink);
+}
+
+.flow-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.flow-step-number {
+  position: absolute;
+  top: 24px;
+  right: 26px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+}
+
+/* Step 1 & 3: card on the left, empty right column.
+   Step 2: card on the right, empty left column. */
+.flow-step[data-step="1"] .flow-card,
+.flow-step[data-step="3"] .flow-card {
+  grid-column: 1;
+  margin-right: 36px;
+}
+
+.flow-step[data-step="2"] .flow-card {
+  grid-column: 2;
+  margin-left: 36px;
 }
 
 .flow-step h3 {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
 }
 
 .flow-step p {
   color: var(--ink-dim);
   font-size: 0.92rem;
-  max-width: 32ch;
 }
 
 /* ============================================
@@ -854,8 +854,9 @@ section {
   display: grid;
   place-items: center;
   border-radius: 11px;
-  background: rgba(77, 225, 255, 0.1);
-  color: var(--electric);
+  background: var(--surface);
+  border: 1px solid var(--surface-line);
+  color: var(--ink);
 }
 
 .bento-icon svg {
@@ -931,7 +932,7 @@ section {
    PRE-FOOTER
    ============================================ */
 .pre-footer-card {
-  background: linear-gradient(135deg, rgba(77, 225, 255, 0.1), rgba(139, 92, 246, 0.1));
+  background: var(--surface-raised);
   border: 1px solid var(--surface-line);
   border-radius: var(--radius-lg);
   padding: 64px var(--edge-inset);
@@ -971,16 +972,19 @@ section {
 .footer-wordmark {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(4.5rem, 16vw, 11rem);
   line-height: 1;
-  text-align: center;
+  white-space: nowrap;
   padding: 0.15em 0 0;
+  display: block;
+  margin: 0 auto;
+  width: max-content;
   background: linear-gradient(180deg, var(--ink) 0%, var(--surface-line) 90%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   letter-spacing: -0.03em;
   user-select: none;
+  font-size: 11rem; /* fallback before JS sizing runs */
 }
 
 .footer-bottom {
@@ -1055,22 +1059,29 @@ section {
   }
 
   .flow-track {
-    grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 32px;
   }
 
   .flow-line {
-    top: 0;
-    bottom: 0;
-    left: 26px;
-    right: auto;
-    width: 2px;
-    height: auto;
+    left: 17px;
+    transform: none;
   }
 
-  .flow-line-fill {
-    width: 100%;
-    height: 0%;
+  .flow-step {
+    grid-template-columns: 1fr;
+    padding-left: 44px;
+  }
+
+  .flow-step[data-step="1"] .flow-card,
+  .flow-step[data-step="2"] .flow-card,
+  .flow-step[data-step="3"] .flow-card {
+    grid-column: 1;
+    margin: 0;
+  }
+
+  .flow-node {
+    left: 17px;
+    top: 28px;
   }
 }
 

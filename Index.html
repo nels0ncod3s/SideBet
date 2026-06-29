@@ -14,8 +14,6 @@
   </head>
   <body>
     <div class="page-frame">
-      <div class="ambient-glow" aria-hidden="true"></div>
-
       <header class="site-header" id="top">
         <a href="#top" class="logo">
           <img src="Images/logo.jpeg" alt="Polyclone" />
@@ -85,7 +83,6 @@
           </div>
 
           <div class="hero-visual" data-reveal>
-            <div class="visual-glow" aria-hidden="true"></div>
 
             <div class="device device-laptop">
               <img src="Images/Web.png" alt="" class="device-frame" />
@@ -139,8 +136,8 @@
             <span class="eyebrow">Right now, on Polyclone</span>
             <h2>Bets your friends are already arguing about</h2>
           </div>
-          <div class="carousel" tabindex="0">
-            <div class="carousel-track">
+          <div class="carousel">
+            <div class="carousel-track" data-marquee>
               <article class="bet-card">
                 <span class="mock-pill">Sports</span>
                 <p class="bet-question">Will Arsenal score in the first half?</p>
@@ -167,16 +164,9 @@
                 <div class="bet-meta"><span>₦1,400 pool</span><span>9 players</span></div>
               </article>
             </div>
-            <div class="carousel-controls">
-              <button class="carousel-btn" data-dir="-1" aria-label="Previous bets">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6" /></svg>
-              </button>
-              <button class="carousel-btn" data-dir="1" aria-label="Next bets">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" /></svg>
-              </button>
-            </div>
           </div>
         </section>
+
 
         <section class="how-it-works" id="how-it-works">
           <div class="section-head">
@@ -188,21 +178,39 @@
             <div class="flow-line" aria-hidden="true"><div class="flow-line-fill"></div></div>
 
             <article class="flow-step" data-step="1">
-              <div class="flow-marker">01</div>
-              <h3>Name the bet</h3>
-              <p>Type the question everyone's already arguing about. Set the stake, set the deadline.</p>
+              <div class="flow-card">
+                <div class="flow-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16M4 12h16M4 18h10" /><circle cx="19" cy="18" r="2.4" /></svg>
+                </div>
+                <span class="flow-step-number">01</span>
+                <h3>Name the bet</h3>
+                <p>Type the question everyone's already arguing about. Set the stake, set the deadline.</p>
+              </div>
+              <div class="flow-node"></div>
             </article>
 
             <article class="flow-step" data-step="2">
-              <div class="flow-marker">02</div>
-              <h3>Share the link</h3>
-              <p>Drop it in the group chat. Friends join with one tap, no app download, no signup forms.</p>
+              <div class="flow-card">
+                <div class="flow-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 12h8M14 6l6 6-6 6" /><path d="M4 5v14" /></svg>
+                </div>
+                <span class="flow-step-number">02</span>
+                <h3>Share the link</h3>
+                <p>Drop it in the group chat. Friends join with one tap, no app download, no signup forms.</p>
+              </div>
+              <div class="flow-node"></div>
             </article>
 
             <article class="flow-step" data-step="3">
-              <div class="flow-marker">03</div>
-              <h3>Get paid instantly</h3>
-              <p>Most markets resolve automatically. Winnings hit your wallet before the chat moves on.</p>
+              <div class="flow-card">
+                <div class="flow-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9" /><path d="M8.5 12.5l2.3 2.3 4.7-5.6" /></svg>
+                </div>
+                <span class="flow-step-number">03</span>
+                <h3>Get paid instantly</h3>
+                <p>Most markets resolve automatically. Winnings hit your wallet before the chat moves on.</p>
+              </div>
+              <div class="flow-node"></div>
             </article>
           </div>
         </section>

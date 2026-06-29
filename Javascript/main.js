@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initCarousel();
   initFlowParallax();
   initMobileNav();
+  initFooterWordmarkFit();
 });
 
 /* ----------------------------------------------
@@ -157,30 +158,88 @@ function initCountUp() {
 }
 
 /* ----------------------------------------------
-   Carousel — horizontal scroll-snap track driven by
-   prev/next buttons (in addition to native touch/drag scroll).
+   Social proof marquee:
+   - Desktop/tablet: cards duplicated once, then translated
+     left continuously for a seamless infinite loop. Pauses on
+     hover/focus/touch so people can actually read a card.
+   - Mobile (<=760px): animation is skipped entirely and the
+     track falls back to plain native horizontal scroll-snap,
+     so it's swipeable instead of auto-scrolling.
 ---------------------------------------------- */
 function initCarousel() {
   const carousel = document.querySelector(".carousel");
   if (!carousel) return;
 
-  const track = carousel.querySelector(".carousel-track");
-  const buttons = carousel.querySelectorAll(".carousel-btn");
+  const track = carousel.querySelector("[data-marquee]");
+  if (!track) return;
 
-  buttons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const dir = parseInt(btn.dataset.dir, 10);
-      const card = track.querySelector(".bet-card");
-      const step = card ? card.getBoundingClientRect().width + 18 : 280;
-      track.scrollBy({ left: dir * step, behavior: "smooth" });
+  const isMobile = () => window.matchMedia("(max-width: 760px)").matches;
+  const SPEED = 40; // pixels per second
+
+  let originalCards = Array.from(track.children);
+  let cloned = false;
+  let offset = 0;
+  let lastTime = null;
+  let paused = false;
+  let rafId = null;
+
+  function cloneCardsForLoop() {
+    if (cloned) return;
+    originalCards.forEach((card) => {
+      track.appendChild(card.cloneNode(true));
     });
+    cloned = true;
+  }
+
+  function uncloneCards() {
+    if (!cloned) return;
+    track.innerHTML = "";
+    originalCards.forEach((card) => track.appendChild(card));
+    cloned = false;
+    offset = 0;
+    track.style.transform = "";
+  }
+
+  function setWidth() {
+    return originalCards.reduce((sum, card) => sum + card.getBoundingClientRect().width + 18, 0);
+  }
+
+  function tick(now) {
+    if (lastTime === null) lastTime = now;
+    const delta = (now - lastTime) / 1000;
+    lastTime = now;
+
+    if (!paused && !isMobile()) {
+      const loopWidth = setWidth();
+      offset -= SPEED * delta;
+      if (Math.abs(offset) >= loopWidth) offset += loopWidth;
+      track.style.transform = `translateX(${offset}px)`;
+    }
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function start() {
+    if (isMobile() || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      uncloneCards();
+      return;
+    }
+    cloneCardsForLoop();
+    if (!rafId) rafId = requestAnimationFrame(tick);
+  }
+
+  carousel.addEventListener("mouseenter", () => (paused = true));
+  carousel.addEventListener("mouseleave", () => (paused = false));
+  carousel.addEventListener("focusin", () => (paused = true));
+  carousel.addEventListener("focusout", () => (paused = false));
+  carousel.addEventListener("touchstart", () => (paused = true), { passive: true });
+
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(start, 200);
   });
 
-  // Keyboard support when the track itself is focused
-  carousel.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowRight") track.scrollBy({ left: 280, behavior: "smooth" });
-    if (e.key === "ArrowLeft") track.scrollBy({ left: -280, behavior: "smooth" });
-  });
+  start();
 }
 
 /* ----------------------------------------------
@@ -194,7 +253,6 @@ function initFlowParallax() {
 
   const fill = section.querySelector(".flow-line-fill");
   const steps = Array.from(section.querySelectorAll(".flow-step"));
-  const isVertical = () => window.matchMedia("(max-width: 980px)").matches;
 
   function update() {
     const rect = section.getBoundingClientRect();
@@ -206,13 +264,7 @@ function initFlowParallax() {
     const progress = Math.min(Math.max(traveled / total, 0), 1);
 
     if (fill) {
-      if (isVertical()) {
-        fill.style.height = `${progress * 100}%`;
-        fill.style.width = "100%";
-      } else {
-        fill.style.width = `${progress * 100}%`;
-        fill.style.height = "100%";
-      }
+      fill.style.height = `${progress * 100}%`;
     }
 
     steps.forEach((step, i) => {
@@ -239,4 +291,40 @@ function initMobileNav() {
     const isOpen = header.classList.toggle("nav-open");
     toggle.setAttribute("aria-expanded", String(isOpen));
   });
+}
+
+/* ----------------------------------------------
+   Footer wordmark fit:
+   - Sizes the "Polyclone" wordmark so it spans roughly 92.5%
+     of the footer's width (e.g. ~370px wide inside a 400px
+     footer), regardless of viewport size.
+---------------------------------------------- */
+function initFooterWordmarkFit() {
+  const wordmark = document.querySelector(".footer-wordmark");
+  const footer = document.querySelector(".site-footer");
+  if (!wordmark || !footer) return;
+
+  const TARGET_RATIO = 0.925;
+
+  function fit() {
+    const footerWidth = footer.getBoundingClientRect().width;
+    const targetWidth = footerWidth * TARGET_RATIO;
+
+    // Measure at a known reference size, then scale proportionally.
+    const referenceSize = 200; // px
+    wordmark.style.fontSize = `${referenceSize}px`;
+    const measuredWidth = wordmark.getBoundingClientRect().width;
+    if (!measuredWidth) return;
+
+    const newSize = (targetWidth / measuredWidth) * referenceSize;
+    wordmark.style.fontSize = `${newSize}px`;
+  }
+
+  fit();
+  window.addEventListener("resize", fit);
+
+  // Fonts loading async can change measured width after first paint.
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(fit);
+  }
 }

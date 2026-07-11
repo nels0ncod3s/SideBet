@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Polyclone — Bet on Anything, With Anyone</title>
+<meta name="description" content="Turn hot takes, sports debates, and office banter into real-money group pools. Create a market in seconds.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ NAVBAR (non-sticky) ============ -->
+<header class="navbar">
+  <div class="navbar__inner">
+    <a href="#top" class="wordmark">Polyclone</a>
+
+    <nav class="navlinks" id="navlinks">
+      <a href="#markets">Markets</a>
+      <a href="#how-it-works">How it Works</a>
+      <a href="#faqs">FAQs</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="btn btn--primary btn--sm" data-action="create-bet">Create Bet</button>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-tray" id="mobileTray">
+    <a href="#markets">Markets</a>
+    <a href="#how-it-works">How it Works</a>
+    <a href="#faqs">FAQs</a>
+    <button class="btn btn--primary btn--block" data-action="create-bet">Create Bet</button>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="hero__inner">
+    <div class="hero__copy reveal">
+      <p class="eyebrow">REAL MONEY · REAL TAKES</p>
+      <h1 class="hero__headline">
+        Turn any argument<br>
+        into a <span class="strike-under">market.</span>
+      </h1>
+      <p class="hero__sub">
+        Sports scores, crypto calls, office banter, campus gossip — set the terms, invite your people, settle the pool. Polyclone runs the ledger so you don't have to argue about who owes who.
+      </p>
+      <div class="hero__cta-row">
+        <button class="btn btn--primary btn--lg" data-action="create-bet">Create a Market</button>
+        <a href="#how-it-works" class="btn btn--secondary btn--lg">See How it Works</a>
+      </div>
+    </div>
+
+    <div class="hero__widget reveal" data-delay="1">
+      <div class="bet-card" id="betCard">
+        <div class="bet-card__head">
+          <span class="bet-card__tag" id="cardTag">SPORTS</span>
+          <span class="bet-card__live"><i></i>LIVE</span>
+        </div>
+        <p class="bet-card__question" id="cardQuestion">Will Arsenal score in the first half?</p>
+        <div class="bet-card__odds">
+          <button class="odds-btn odds-btn--yes" data-side="yes">
+            <span>YES</span><span class="odds-btn__pct" id="pctYes">62%</span>
+          </button>
+          <button class="odds-btn odds-btn--no" data-side="no">
+            <span>NO</span><span class="odds-btn__pct" id="pctNo">38%</span>
+          </button>
+        </div>
+        <div class="bet-card__meta">
+          <span id="cardPool">₦148,200 pool</span>
+          <span id="cardPlayers">213 in</span>
+        </div>
+      </div>
+
+      <div class="composer">
+        <label for="composerInput" class="composer__label">Type your own question — watch the card update live</label>
+        <input type="text" id="composerInput" class="composer__input" placeholder="e.g. Does the lecturer cancel Friday's class?" maxlength="72">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATS STRIP ============ -->
+<section class="stats">
+  <div class="stats__inner">
+    <div class="stat">
+      <span class="stat__value" data-count="48200">0</span>
+      <span class="stat__label">Users on Polyclone</span>
+    </div>
+    <div class="stat">
+      <span class="stat__value" data-count="9640" data-prefix="₦" data-suffix="M">0</span>
+      <span class="stat__label">Settled Across All Pools</span>
+    </div>
+    <div class="stat">
+      <span class="stat__value" data-count="112300">0</span>
+      <span class="stat__label">Bets Resolved</span>
+    </div>
+    <div class="stat">
+      <span class="stat__value" data-count="4" data-suffix="min">0</span>
+      <span class="stat__label">Avg. Time to First Payout</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BENTO GRID ============ -->
+<section class="bento" id="markets">
+  <div class="section-head reveal">
+    <p class="eyebrow">MARKET CATEGORIES</p>
+    <h2>Every argument has an odds board.</h2>
+  </div>
+
+  <div class="bento__grid">
+
+    <article class="bento__cell bento__cell--sports reveal">
+      <div class="bento__cell-top">
+        <span class="bento__num">01</span>
+        <span class="bento__cat">Sports</span>
+      </div>
+      <h3>Live group prediction, mid-match.</h3>
+      <div class="mini-market">
+        <p>"Will Arsenal score in the first half?"</p>
+        <div class="mini-market__bar">
+          <span style="width:62%"></span>
+        </div>
+        <div class="mini-market__row">
+          <span>YES 62%</span>
+          <span>NO 38%</span>
+        </div>
+      </div>
+      <p class="bento__desc">Open a pool before kickoff, resolve it before the halftime whistle. No slip codes, no waiting on a bookie.</p>
+    </article>
+
+    <article class="bento__cell bento__cell--crypto reveal" data-delay="1">
+      <div class="bento__cell-top">
+        <span class="bento__num">02</span>
+        <span class="bento__cat">Crypto</span>
+      </div>
+      <h3>Fast, volatile calls.</h3>
+      <p class="bento__desc">"BTC above $110K by Friday close?" Set it, share it, done in under a minute.</p>
+    </article>
+
+    <article class="bento__cell bento__cell--office reveal" data-delay="2">
+      <div class="bento__cell-top">
+        <span class="bento__num">03</span>
+        <span class="bento__cat">Office Banter</span>
+      </div>
+      <h3>Micro debates, settled by lunch.</h3>
+      <p class="bento__desc">"Does the standup run past 15 minutes?" Your team's running joke, now with a payout.</p>
+    </article>
+
+    <article class="bento__cell bento__cell--school reveal" data-delay="3">
+      <div class="bento__cell-top">
+        <span class="bento__num">04</span>
+        <span class="bento__cat">Campus</span>
+      </div>
+      <h3>Exam and lecture tracking.</h3>
+      <p class="bento__desc">"Does 200L Calc II get postponed again?" The whole class already knows the answer.</p>
+    </article>
+
+    <article class="bento__cell bento__cell--custom reveal" data-delay="4">
+      <div class="bento__cell-top">
+        <span class="bento__num">05</span>
+        <span class="bento__cat">Custom</span>
+      </div>
+      <h3>Write your own rule engine.</h3>
+      <p class="bento__desc">Set the question, the resolution source, and the deadline. If it's a yes/no, it's a market.</p>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="flow" id="how-it-works">
+  <div class="section-head reveal">
+    <p class="eyebrow">HOW IT WORKS</p>
+    <h2>From argument to settled pool in four steps.</h2>
+  </div>
+
+  <div class="flow__list">
+    <div class="flow__step reveal">
+      <span class="flow__index">01</span>
+      <div class="flow__body">
+        <h3>State the terms</h3>
+        <p>Write the question, pick the stake, set the deadline. Polyclone locks the exact wording so nobody can move the goalposts later.</p>
+      </div>
+    </div>
+    <div class="flow__step reveal" data-delay="1">
+      <span class="flow__index">02</span>
+      <div class="flow__body">
+        <h3>Invite the pool</h3>
+        <p>Share a link to your group chat. Everyone stakes YES or NO before the deadline hits — the pool locks automatically.</p>
+      </div>
+    </div>
+    <div class="flow__step reveal" data-delay="2">
+      <span class="flow__index">03</span>
+      <div class="flow__body">
+        <h3>Reality decides</h3>
+        <p>The outcome resolves against the source you named upfront — final score, closing price, or a neutral vote if it's a judgment call.</p>
+      </div>
+    </div>
+    <div class="flow__step reveal" data-delay="3">
+      <span class="flow__index">04</span>
+      <div class="flow__body">
+        <h3>Payout, instantly</h3>
+        <p>Winners get paid out of the pool automatically. No chasing anyone down, no "I'll send it later."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOCIAL PROOF + FINAL CTA ============ -->
+<section class="proof">
+  <div class="proof__inner reveal">
+    <div class="proof__quotes">
+      <blockquote>
+        <p>"My office standup pool has run for eleven straight weeks. Nobody's late anymore."</p>
+        <cite>— Group admin, Lagos</cite>
+      </blockquote>
+      <blockquote>
+        <p>"Settled a ₦40k argument about a penalty call in ninety seconds."</p>
+        <cite>— Sports pool creator</cite>
+      </blockquote>
+      <blockquote>
+        <p>"Finally a way to bet on my own predictions instead of a sportsbook's odds."</p>
+        <cite>— Early user</cite>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<section class="terminal-cta" id="faqs">
+  <div class="terminal-cta__inner reveal">
+    <div class="terminal">
+      <div class="terminal__bar">
+        <span></span><span></span><span></span>
+        <span class="terminal__title">polyclone — new_market</span>
+      </div>
+      <div class="terminal__body">
+        <p><span class="prompt">$</span> polyclone create-market</p>
+        <p class="typed" id="terminalTyped">"Does it rain during the FUTA convocation?"</p>
+        <p><span class="prompt">$</span> stake set --amount=2000 --currency=NGN</p>
+        <p><span class="prompt">$</span> pool invite --link</p>
+        <p class="ok">✓ Market live. Share the link to open the pool.</p>
+        <p class="cursor-line"><span class="prompt">$</span><span class="cursor"></span></p>
+      </div>
+    </div>
+
+    <div class="terminal-cta__copy">
+      <h2>Your next argument is worth more than bragging rights.</h2>
+      <button class="btn btn--primary btn--lg" data-action="create-bet">Create Your First Market</button>
+      <p class="terminal-cta__fine">No app download. Free to create. 18+ only.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <span class="wordmark wordmark--sm">Polyclone</span>
+    <span class="footer__copy">© 2026 Polyclone. Bet responsibly.</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

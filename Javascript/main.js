@@ -3,6 +3,7 @@
    ============================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
+  initThemeToggle();
   initLanguageSwitcher();
   initSmoothNavLinks();
   initScrollReveal();
@@ -11,7 +12,39 @@ document.addEventListener("DOMContentLoaded", () => {
   initFlowParallax();
   initMobileNav();
   initFooterWordmarkFit();
+  initStickyHeader();
 });
+
+/* ----------------------------------------------
+   Theme toggle — switches between dark (default) and light mode.
+   Applies data-theme="light" to <html>, persists to localStorage.
+   Respects OS preference on first visit.
+---------------------------------------------- */
+function initThemeToggle() {
+  const btn = document.querySelector(".theme-toggle");
+  if (!btn) return;
+
+  const STORAGE_KEY = "polyclone_theme";
+  const stored = localStorage.getItem(STORAGE_KEY);
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const initial = stored || (prefersDark ? "dark" : "light");
+  applyTheme(initial);
+
+  btn.addEventListener("click", () => {
+    const current = document.documentElement.getAttribute("data-theme") || "dark";
+    applyTheme(current === "light" ? "dark" : "light");
+  });
+
+  function applyTheme(theme) {
+    if (theme === "light") {
+      document.documentElement.setAttribute("data-theme", "light");
+    } else {
+      document.documentElement.removeAttribute("data-theme");
+    }
+    localStorage.setItem(STORAGE_KEY, theme);
+    btn.setAttribute("aria-label", `Switch to ${theme === "light" ? "dark" : "light"} mode`);
+  }
+}
 
 /* ----------------------------------------------
    Language switcher
@@ -38,23 +71,29 @@ function initLanguageSwitcher() {
 
   trigger.addEventListener("click", (e) => {
     e.stopPropagation();
-    const isOpen = dropdown.classList.toggle("is-open-mobile");
+    const isOpen = switcher.classList.toggle("is-open");
     trigger.setAttribute("aria-expanded", String(isOpen));
   });
 
   options.forEach((opt) => {
     opt.setAttribute("tabindex", "0");
-    opt.addEventListener("click", () => selectLanguage(opt));
+    opt.addEventListener("click", () => {
+      selectLanguage(opt);
+      switcher.classList.remove("is-open");
+      trigger.setAttribute("aria-expanded", "false");
+    });
     opt.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
         selectLanguage(opt);
+        switcher.classList.remove("is-open");
+        trigger.setAttribute("aria-expanded", "false");
       }
     });
   });
 
   document.addEventListener("click", () => {
-    dropdown.classList.remove("is-open-mobile");
+    switcher.classList.remove("is-open");
     trigger.setAttribute("aria-expanded", "false");
   });
 
@@ -326,5 +365,40 @@ function initFooterWordmarkFit() {
   // Fonts loading async can change measured width after first paint.
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(fit);
+  }
+}
+
+/* ----------------------------------------------
+   Sticky header:
+   - Header is position:fixed in CSS. This measures its real
+     height (which varies with viewport/wrapping) and writes it
+     to --header-space so <main> reserves the right amount of
+     top padding and content never sits underneath it.
+   - Also toggles .is-scrolled once the page has scrolled past
+     the hero, for a slightly stronger background/shadow.
+---------------------------------------------- */
+function initStickyHeader() {
+  const header = document.querySelector(".site-header");
+  if (!header) return;
+
+  function setHeaderSpace() {
+    const rect = header.getBoundingClientRect();
+    const topOffset = parseFloat(getComputedStyle(header).top) || 0;
+    const space = rect.height + topOffset + 18; // small extra breathing room
+    document.documentElement.style.setProperty("--header-space", `${space}px`);
+  }
+
+  function onScroll() {
+    header.classList.toggle("is-scrolled", window.scrollY > 24);
+  }
+
+  setHeaderSpace();
+  onScroll();
+
+  window.addEventListener("resize", setHeaderSpace);
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(setHeaderSpace);
   }
 }

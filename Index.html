@@ -29,25 +29,14 @@
         </nav>
 
         <div class="header-cta">
-          <div class="lang-switch">
-            <button class="lang-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Change language">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-                <circle cx="12" cy="12" r="9" />
-                <path d="M3 12h18M12 3c2.4 2.6 3.6 5.6 3.6 9s-1.2 6.4-3.6 9c-2.4-2.6-3.6-5.6-3.6-9s1.2-6.4 3.6-9Z" />
-              </svg>
-              <span class="lang-current">EN</span>
-            </button>
-            <ul class="lang-dropdown" role="listbox">
-              <li role="option" data-lang="en" data-label="EN" aria-selected="true">English</li>
-              <li role="option" data-lang="yo" data-label="YO">Yorùbá</li>
-              <li role="option" data-lang="ig" data-label="IG">Igbo</li>
-              <li role="option" data-lang="ha" data-label="HA">Hausa</li>
-              <li role="option" data-lang="ja" data-label="JA">日本語</li>
-              <li role="option" data-lang="es" data-label="ES">Español</li>
-              <li role="option" data-lang="de" data-label="DE">Deutsch</li>
-              <li role="option" data-lang="ko" data-label="KO">한국어</li>
-            </ul>
-          </div>
+          <button class="theme-toggle" aria-label="Toggle light/dark mode" title="Toggle theme">
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+            </svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </button>
           <button class="btn btn-ghost">Login</button>
           <button class="btn btn-primary">Create Bet</button>
         </div>
@@ -79,6 +68,17 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
               </button>
             </form>
+
+            <div class="doodle-note" aria-hidden="true">
+              <div class="sticky-note">
+                <span>it's free to start!</span>
+              </div>
+              <svg class="doodle-arrow" viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 8 C 20 4, 55 28, 68 50" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 3"/>
+                <path d="M68 50 L58 44 M68 50 L62 60" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+
             <p class="hero-microcopy">No app needed. Settle in the chat you already use.</p>
           </div>
 
@@ -98,35 +98,60 @@
             </div>
 
             <div class="mock-card mock-card--1">
-              <span class="mock-pill">Live</span>
-              <p>Will Nigeria win AFCON?</p>
+              <div class="mock-card-header">
+                <span class="mock-pill">🔴 Live</span>
+                <span class="mock-card-time">Ends in 2h</span>
+              </div>
+              <p class="mock-card-question">Will Nigeria win AFCON 2026?</p>
+              <div class="mock-odds-bar">
+                <div class="odds-bar-fill" style="width:64%"></div>
+              </div>
               <div class="mock-odds">
                 <span class="odds-yes">YES 64%</span>
                 <span class="odds-no">NO 36%</span>
               </div>
+              <div class="mock-card-footer">
+                <div class="mock-avatars">
+                  <span class="mock-avatar" style="background:#4de1ff">A</span>
+                  <span class="mock-avatar" style="background:#8b5cf6">K</span>
+                  <span class="mock-avatar" style="background:#34d399">T</span>
+                  <span class="mock-avatar-more">+9</span>
+                </div>
+                <span class="mock-pool">₦24,500 pool</span>
+              </div>
             </div>
 
             <div class="mock-card mock-card--2">
-              <span class="mock-pill mock-pill--green">Resolved</span>
-              <p>Will it rain in Lekki by 6pm?</p>
-              <span class="mock-payout">+ ₦12,400</span>
+              <div class="mock-card-header">
+                <span class="mock-pill mock-pill--green">✓ Resolved</span>
+              </div>
+              <p class="mock-card-question">Rain in Lekki by 6pm?</p>
+              <div class="mock-payout-row">
+                <span class="mock-payout">+ ₦12,400</span>
+                <span class="mock-payout-label">you won</span>
+              </div>
             </div>
           </div>
         </section>
 
         <section class="numbers" aria-label="Platform statistics">
           <div class="stat">
-            <p class="stat-number" data-count-to="4000000" data-prefix="₦" data-suffix="+">0</p>
+            <p class="stat-number" data-count-to="1000" data-suffix="+">0</p>
+            <p class="stat-label">Users since 2025</p>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat">
+            <p class="stat-number" data-count-to="1000000" data-prefix="₦" data-suffix="+">0</p>
             <p class="stat-label">Paid out to winners</p>
           </div>
           <div class="stat-divider" aria-hidden="true"></div>
           <div class="stat">
-            <p class="stat-number" data-count-to="18000" data-suffix="+">0</p>
-            <p class="stat-label">Bets created</p>
+            <p class="stat-number" data-count-to="300" data-suffix="+">0</p>
+            <p class="stat-label">Markets created</p>
           </div>
           <div class="stat-divider" aria-hidden="true"></div>
           <div class="stat">
-            <p class="stat-number" data-count-to="92" data-suffix="%">0</p>
+            <p class="stat-number" data-count-to="80" data-suffix="%">0</p>
             <p class="stat-label">Resolved automatically</p>
           </div>
         </section>
@@ -222,16 +247,29 @@
           </div>
 
           <div class="bento-grid">
-            <article class="bento-cell bento-cell--lg" data-market="sports">
-              <div class="bento-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9" /><path d="M12 7.5l3.6 2.6-1.4 4.2h-4.4l-1.4-4.2L12 7.5Z" /><path d="M12 3v4.5M3.5 9.5l4.9 1.6M3.7 16l4.5-3.3M20.3 16l-4.5-3.3M20.5 9.5l-4.9 1.6M12 21v-4.5" /></svg>
+
+            <!-- Sports: large 2x2, full mini-bet preview inside -->
+            <article class="bento-cell bento-cell--lg bento-cell--sports" data-market="sports">
+              <div class="bento-cell-top">
+                <div class="bento-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7.5l3.6 2.6-1.4 4.2h-4.4l-1.4-4.2L12 7.5Z"/><path d="M12 3v4.5M3.5 9.5l4.9 1.6M3.7 16l4.5-3.3M20.3 16l-4.5-3.3M20.5 9.5l-4.9 1.6M12 21v-4.5"/></svg>
+                </div>
+                <span class="bento-live-badge">● Live</span>
               </div>
               <h3>Sports</h3>
               <p>Football, basketball, AFCON, the office five-a-side.</p>
-              <div class="bento-visual" aria-hidden="true">
-                <span class="bento-tag">Arsenal v Chelsea</span>
-                <span class="bento-tag bento-tag--ghost">AFCON Final</span>
-                <span class="bento-tag bento-tag--ghost">UCL Matchday</span>
+              <div class="bento-mini-market">
+                <p class="bento-mini-q">Will Arsenal score in the first half?</p>
+                <div class="bento-mini-bar">
+                  <div class="bento-mini-fill" style="width:58%"></div>
+                </div>
+                <div class="bento-mini-odds">
+                  <span class="odds-yes">YES 58%</span>
+                  <span class="odds-no">NO 42%</span>
+                </div>
+                <div class="bento-mini-meta">
+                  <span>₦8,200 pool</span><span>14 players</span>
+                </div>
               </div>
               <div class="bento-hover-card">
                 <span class="mock-pill">Sports</span>
@@ -240,12 +278,14 @@
               </div>
             </article>
 
-            <article class="bento-cell" data-market="crypto">
+            <!-- Crypto -->
+            <article class="bento-cell bento-cell--crypto" data-market="crypto">
               <div class="bento-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l8 4.5v9L12 20l-8-4.5v-9L12 2Z" /><path d="M12 7v10M8.5 9l7 6M15.5 9l-7 6" /></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l8 4.5v9L12 20l-8-4.5v-9L12 2Z"/><path d="M12 7v10M8.5 9l7 6M15.5 9l-7 6"/></svg>
               </div>
               <h3>Crypto</h3>
               <p>Price calls, on-chain drama.</p>
+              <div class="bento-stat">ETH $4k? <strong>71% say YES</strong></div>
               <div class="bento-hover-card">
                 <span class="mock-pill">Crypto</span>
                 <p>Does ETH close above $4k?</p>
@@ -253,12 +293,14 @@
               </div>
             </article>
 
-            <article class="bento-cell" data-market="office">
+            <!-- Office -->
+            <article class="bento-cell bento-cell--office" data-market="office">
               <div class="bento-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="3" width="16" height="18" rx="1.5" /><path d="M8 8h8M8 12h8M8 16h5" /></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
               </div>
               <h3>Office</h3>
               <p>Standups, deadlines, who's late again.</p>
+              <div class="bento-stat">Standup overrun? <strong>33% say YES</strong></div>
               <div class="bento-hover-card">
                 <span class="mock-pill mock-pill--violet">Office</span>
                 <p>Standup runs past 10:15?</p>
@@ -266,12 +308,14 @@
               </div>
             </article>
 
-            <article class="bento-cell" data-market="school">
+            <!-- School -->
+            <article class="bento-cell bento-cell--school" data-market="school">
               <div class="bento-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 9l10-5 10 5-10 5-10-5Z" /><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5" /></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 9l10-5 10 5-10 5-10-5Z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>
               </div>
               <h3>School</h3>
               <p>Results day, lecturer no-shows, exam leaks.</p>
+              <div class="bento-stat">Class cancelled? <strong>45% say YES</strong></div>
               <div class="bento-hover-card">
                 <span class="mock-pill mock-pill--violet">School</span>
                 <p>Lecturer cancels 8am class?</p>
@@ -279,12 +323,14 @@
               </div>
             </article>
 
-            <article class="bento-cell" data-market="gaming">
+            <!-- Gaming -->
+            <article class="bento-cell bento-cell--gaming" data-market="gaming">
               <div class="bento-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="7" width="20" height="11" rx="5" /><path d="M7 11v2M6 12h2M16 11h.01M18.5 13h.01" /></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 11v2M6 12h2M16 11h.01M18.5 13h.01"/></svg>
               </div>
               <h3>Gaming</h3>
-              <p>FIFA nights, tournament brackets, clutch calls.</p>
+              <p>FIFA nights, brackets, clutch calls.</p>
+              <div class="bento-stat">50/50 split — it's on</div>
               <div class="bento-hover-card">
                 <span class="mock-pill">Gaming</span>
                 <p>Bode wins the FIFA final?</p>
@@ -292,18 +338,21 @@
               </div>
             </article>
 
-            <article class="bento-cell" data-market="random">
+            <!-- Random -->
+            <article class="bento-cell bento-cell--random" data-market="random">
               <div class="bento-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9" /><circle cx="9" cy="9" r="1" fill="currentColor" /><circle cx="15" cy="9" r="1" fill="currentColor" /><circle cx="9" cy="15" r="1" fill="currentColor" /><circle cx="15" cy="15" r="1" fill="currentColor" /><circle cx="12" cy="12" r="1" fill="currentColor" /></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="9" r="1" fill="currentColor"/><circle cx="15" cy="9" r="1" fill="currentColor"/><circle cx="9" cy="15" r="1" fill="currentColor"/><circle cx="15" cy="15" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
               </div>
               <h3>Random</h3>
-              <p>Whatever the group chat is on right now.</p>
+              <p>Whatever the chat's on right now.</p>
+              <div class="bento-stat">Rain in Lekki? <strong>38% YES</strong></div>
               <div class="bento-hover-card">
                 <span class="mock-pill">Random</span>
                 <p>Does it rain in Lekki by 6pm?</p>
                 <div class="mock-odds"><span class="odds-yes">YES 38%</span><span class="odds-no">NO 62%</span></div>
               </div>
             </article>
+
           </div>
         </section>
 
@@ -340,6 +389,29 @@
           </div>
           <div class="footer-base">
             <span>© 2026 Polyclone. All bets settled responsibly.</span>
+
+            <div class="lang-switch lang-switch--footer">
+              <button class="lang-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Change language">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M3 12h18M12 3c2.4 2.6 3.6 5.6 3.6 9s-1.2 6.4-3.6 9c-2.4-2.6-3.6-5.6-3.6-9s1.2-6.4 3.6-9Z" />
+                </svg>
+                <span class="lang-current">English</span>
+                <svg class="lang-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </button>
+              <ul class="lang-dropdown" role="listbox">
+                <li role="option" data-lang="en" data-label="English" aria-selected="true"><span class="lang-flag">🇬🇧</span>English</li>
+                <li role="option" data-lang="yo" data-label="Yorùbá"><span class="lang-flag">🇳🇬</span>Yorùbá</li>
+                <li role="option" data-lang="ig" data-label="Igbo"><span class="lang-flag">🇳🇬</span>Igbo</li>
+                <li role="option" data-lang="ha" data-label="Hausa"><span class="lang-flag">🇳🇬</span>Hausa</li>
+                <li role="option" data-lang="ja" data-label="日本語"><span class="lang-flag">🇯🇵</span>日本語</li>
+                <li role="option" data-lang="es" data-label="Español"><span class="lang-flag">🇪🇸</span>Español</li>
+                <li role="option" data-lang="de" data-label="Deutsch"><span class="lang-flag">🇩🇪</span>Deutsch</li>
+                <li role="option" data-lang="ko" data-label="한국어"><span class="lang-flag">🇰🇷</span>한국어</li>
+              </ul>
+            </div>
           </div>
         </div>
       </footer>

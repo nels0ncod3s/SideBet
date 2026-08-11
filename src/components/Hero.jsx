@@ -1,10 +1,12 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import ChatBetMock from './ChatBetMock'
 
 export default function Hero() {
   const [prompt, setPrompt] = useState('')
+  const navigate = useNavigate()
 
   return (
     <section
@@ -48,7 +50,10 @@ export default function Hero() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          onSubmit={(e) => e.preventDefault()}
+          onSubmit={(e) => {
+            e.preventDefault()
+            navigate('/signup')
+          }}
           className="mt-8 flex items-center gap-2 rounded-2xl border border-ink-border bg-ink-raised p-2 pl-4 focus-within:border-coin/60"
         >
           <input

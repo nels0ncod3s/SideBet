@@ -29,6 +29,11 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  html, body {
+    overflow-x: hidden;
+    touch-action: manipulation;
   }
   body {
     background-color: var(--color-ink);

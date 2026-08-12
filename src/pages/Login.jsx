@@ -23,7 +23,7 @@ export default function Login() {
       footer={
         <>
           New here?{' '}
-          <Link to="/signup" className="font-medium text-coin hover:brightness-110">
+          <Link to="/signup" className="font-medium text-brand hover:brightness-110">
             Create an account
           </Link>
         </>
@@ -54,7 +54,7 @@ export default function Login() {
 
         <button
           type="submit"
-          className="mt-2 w-full rounded-xl bg-coin py-3 text-sm font-semibold text-ink transition hover:brightness-110"
+          className="mt-2 w-full rounded-xl bg-brand py-3 text-sm font-semibold text-white transition hover:brightness-110"
         >
           Log in
         </button>

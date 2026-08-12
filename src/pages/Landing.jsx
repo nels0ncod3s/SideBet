@@ -7,7 +7,7 @@ import Footer from '../components/Footer'
 
 function Landing() {
   return (
-    <div id="top" className="min-h-screen bg-ink font-body text-text-hi">
+    <div id="top" className="min-h-screen bg-paper font-body text-text-hi">
       <Header />
       <Hero />
       <LiveStats />

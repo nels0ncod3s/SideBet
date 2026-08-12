@@ -18,7 +18,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="mb-4 inline-flex items-center gap-2 rounded-full border border-ink-border bg-ink-raised px-3 py-1 font-mono text-xs text-text-lo"
+          className="mb-4 inline-flex items-center gap-2 rounded-full border border-line bg-paper-raised px-3 py-1 font-mono text-xs text-text-lo"
         >
           Play-money beta · no card required
         </motion.p>
@@ -32,7 +32,7 @@ export default function Hero() {
           Turn group chat
           <br />
           debates into a{' '}
-          <span className="text-coin">market</span>.
+          <span className="text-brand">market</span>.
         </motion.h1>
 
         <motion.p
@@ -42,7 +42,8 @@ export default function Hero() {
           className="mt-5 max-w-md text-base text-text-lo"
         >
           Someone's always got a hot take. SideBet turns it into a pool in
-          seconds — drop the link in the chat, everyone stakes coins, the
+          seconds — drop the link in the chat, everyone throws in their
+          stake, the
           house settles it.
         </motion.p>
 
@@ -54,7 +55,7 @@ export default function Hero() {
             e.preventDefault()
             navigate('/signup')
           }}
-          className="mt-8 flex items-center gap-2 rounded-2xl border border-ink-border bg-ink-raised p-2 pl-4 focus-within:border-coin/60"
+          className="mt-8 flex items-center gap-2 rounded-2xl border border-line bg-paper-raised p-2 pl-4 focus-within:border-brand/60"
         >
           <input
             value={prompt}
@@ -64,7 +65,7 @@ export default function Hero() {
           />
           <button
             type="submit"
-            className="flex shrink-0 items-center gap-1.5 rounded-xl bg-coin px-4 py-2.5 text-sm font-semibold text-ink transition hover:brightness-110"
+            className="flex shrink-0 items-center gap-1.5 rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white transition hover:brightness-110"
           >
             Create pool
             <ArrowRight size={15} strokeWidth={2.5} />
@@ -77,7 +78,7 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.25 }}
           className="mt-3 font-mono text-xs text-text-faint"
         >
-          Coins have no cash value — for now, it's all bragging rights.
+          Play-money balances only — for now, it's all bragging rights.
         </motion.p>
       </div>
 

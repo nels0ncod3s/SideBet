@@ -4,7 +4,7 @@ const steps = [
   {
     n: '01',
     title: 'Create',
-    body: 'Type the question everyone in the chat is already arguing about. Set the stake — say, 100 coins to play.',
+    body: 'Type the question everyone in the chat is already arguing about. Set the stake — say, ₦100 to play.',
   },
   {
     n: '02',
@@ -30,7 +30,7 @@ export default function HowItWorks() {
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 gap-px overflow-hidden rounded-3xl border border-ink-border bg-ink-border sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-3">
         {steps.map((s, i) => (
           <motion.div
             key={s.n}
@@ -38,9 +38,9 @@ export default function HowItWorks() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.4, delay: i * 0.1 }}
-            className="bg-ink-raised p-7"
+            className="bg-paper-raised p-7"
           >
-            <span className="font-mono text-sm text-coin">{s.n}</span>
+            <span className="font-mono text-sm text-brand">{s.n}</span>
             <h3 className="mt-3 font-display text-xl font-semibold">
               {s.title}
             </h3>

@@ -8,7 +8,7 @@ export default function FormField({ label, type = 'text', placeholder, autoCompl
         type={type}
         placeholder={placeholder}
         autoComplete={autoComplete}
-        className="w-full rounded-xl border border-ink-border bg-ink-raised px-4 py-3 text-[16px] text-text-hi placeholder:text-text-faint focus:border-coin/60 focus:outline-none"
+        className="w-full rounded-xl border border-line bg-paper-raised px-4 py-3 text-[16px] text-text-hi placeholder:text-text-faint focus:border-brand/60 focus:outline-none"
         {...props}
       />
     </label>

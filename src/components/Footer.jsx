@@ -1,11 +1,11 @@
 export default function Footer() {
   return (
-    <footer className="border-t border-ink-border/60">
+    <footer className="border-t border-line/60">
       <div className="mx-auto max-w-6xl px-6 py-12">
         <div className="flex flex-col gap-8 sm:flex-row sm:justify-between">
           <div className="max-w-xs">
             <div className="flex items-center gap-2">
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-coin text-xs font-bold text-ink">
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand text-xs font-bold text-white">
                 S
               </span>
               <span className="font-display text-base font-semibold">
@@ -13,7 +13,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="mt-3 text-xs leading-relaxed text-text-faint">
-              SideBet is currently a play-money product. Coins are earned
+              SideBet is currently a play-money product. Balances are earned
               in-app, carry no cash value, and can't be withdrawn or
               purchased with real money.
             </p>

@@ -4,7 +4,7 @@ import { navItems } from './navItems'
 export default function BottomNav() {
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-50 flex border-t border-ink-border/70 bg-ink/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden"
+      className="fixed inset-x-0 bottom-0 z-50 flex border-t border-line/70 bg-paper/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden"
       aria-label="Primary"
     >
       {navItems.map(({ to, label, icon: Icon, end }) => (
@@ -14,7 +14,7 @@ export default function BottomNav() {
           end={end}
           className={({ isActive }) =>
             `flex flex-1 flex-col items-center gap-1 py-2.5 text-[11px] ${
-              isActive ? 'text-coin' : 'text-text-faint'
+              isActive ? 'text-brand' : 'text-text-faint'
             }`
           }
         >

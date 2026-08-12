@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom'
 
 export default function AuthLayout({ eyebrow, title, subtitle, children, footer }) {
   return (
-    <div className="flex min-h-screen flex-col bg-ink">
+    <div className="flex min-h-screen flex-col bg-paper">
       <header className="px-6 py-6">
         <Link to="/" className="flex w-fit items-center gap-2">
-          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-coin text-sm font-bold text-ink">
+          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-sm font-bold text-white">
             S
           </span>
           <span className="font-display text-lg font-semibold tracking-tight text-text-hi">

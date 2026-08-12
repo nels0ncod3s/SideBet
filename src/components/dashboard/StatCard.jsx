@@ -1,9 +1,15 @@
-export default function StatCard({ label, value, accent = 'text-hi' }) {
+export default function StatCard({ label, value, accent = 'default' }) {
   const accentClass =
-    accent === 'coin' ? 'text-coin' : accent === 'stake' ? 'text-stake' : 'text-text-hi'
+    accent === 'brand'
+      ? 'text-brand'
+      : accent === 'win'
+        ? 'text-win'
+        : accent === 'stake'
+          ? 'text-stake'
+          : 'text-text-hi'
 
   return (
-    <div className="rounded-2xl border border-ink-border bg-ink-raised p-5">
+    <div className="rounded-2xl border border-line bg-paper-raised p-5">
       <p className="font-mono text-xs uppercase tracking-widest text-text-faint">
         {label}
       </p>

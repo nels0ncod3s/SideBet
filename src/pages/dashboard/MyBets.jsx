@@ -16,10 +16,10 @@ export default function MyBets() {
         My Bets
       </h1>
       <p className="mt-1 text-sm text-text-lo">
-        Every pool you've staked coins in, live and settled.
+        Every pool you've staked in, live and settled.
       </p>
 
-      <div className="mt-6 flex flex-col gap-3">
+      <div className="mt-6 grid grid-cols-1 gap-3 lg:grid-cols-2">
         {bets.map((b) => (
           <BetRow key={b.title} {...b} />
         ))}

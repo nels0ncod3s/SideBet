@@ -2,23 +2,25 @@
 
 @theme {
   /* -- Color system --
-     Near-black ink instead of pure black or cream.
-     Two accents carry meaning, not decoration:
-     coin  = what you win   (gold)
-     stake = what's on the table (coral/pink) */
-  --color-ink: #0a0f0d;
-  --color-ink-raised: #121a17;
-  --color-ink-card: #182420;
-  --color-ink-border: #24322c;
+     White/paper base with one saturated blue doing all the work,
+     and a warm orange carrying the "at risk" meaning — blue = action/win,
+     orange = the pot/stake, so the two colors stay legible against white
+     and against each other. */
+  --color-paper: #f6f8fc;
+  --color-paper-raised: #ffffff;
+  --color-paper-card: #ffffff;
+  --color-line: #e1e7f0;
 
-  --color-coin: #f5b700;
-  --color-coin-dim: #7a5c00;
-  --color-stake: #ff4f64;
-  --color-stake-dim: #7a1f2a;
+  --color-brand: #2554ff;
+  --color-brand-dim: #dbe4ff;
+  --color-stake: #c2410c;
+  --color-stake-dim: #ffe8d6;
+  --color-win: #15803d;
+  --color-win-dim: #dcfce7;
 
-  --color-text-hi: #f3f1ec;
-  --color-text-lo: #8b9691;
-  --color-text-faint: #56605b;
+  --color-text-hi: #0b1524;
+  --color-text-lo: #5b6b82;
+  --color-text-faint: #94a3b8;
 
   /* -- Type system -- */
   --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
@@ -30,20 +32,20 @@
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
   }
   html, body {
-    overflow-x: hidden;
     touch-action: manipulation;
   }
   body {
-    background-color: var(--color-ink);
+    background-color: var(--color-paper);
     color: var(--color-text-hi);
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
   }
   ::selection {
-    background: var(--color-coin);
-    color: var(--color-ink);
+    background: var(--color-brand);
+    color: white;
   }
 }
 

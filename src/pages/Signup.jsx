@@ -18,11 +18,11 @@ export default function Signup() {
     <AuthLayout
       eyebrow="Get started"
       title="Create your account"
-      subtitle="You'll start with 1,000 free coins to stake."
+      subtitle="You'll start with ₦1,000 free to stake."
       footer={
         <>
           Already have an account?{' '}
-          <Link to="/login" className="font-medium text-coin hover:brightness-110">
+          <Link to="/login" className="font-medium text-brand hover:brightness-110">
             Log in
           </Link>
         </>
@@ -54,13 +54,13 @@ export default function Signup() {
 
         <button
           type="submit"
-          className="mt-2 w-full rounded-xl bg-coin py-3 text-sm font-semibold text-ink transition hover:brightness-110"
+          className="mt-2 w-full rounded-xl bg-brand py-3 text-sm font-semibold text-white transition hover:brightness-110"
         >
           Create account
         </button>
 
         <p className="text-center text-xs text-text-faint">
-          By continuing you agree Coins have no cash value and can't be
+          By continuing you agree your balance has no cash value and can't be
           bought, sold, or withdrawn.
         </p>
       </form>

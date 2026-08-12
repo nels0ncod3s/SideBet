@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { formatNaira } from '../lib/currency'
 
 const markets = [
   {
@@ -47,14 +48,14 @@ export default function MarketBento() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.4, delay: i * 0.08 }}
-            className={`${m.size} rounded-2xl border border-ink-border bg-ink-raised p-6`}
+            className={`${m.size} rounded-2xl border border-line bg-paper-raised p-6`}
           >
             <span className="font-mono text-xs text-stake">{m.tag}</span>
             <p className="mt-3 font-display text-lg font-medium leading-snug text-text-hi">
               {m.prompt}
             </p>
             <p className="mt-4 font-mono text-xs text-text-lo">
-              {m.pot} coins staked
+              {formatNaira(m.pot)} staked
             </p>
           </motion.div>
         ))}

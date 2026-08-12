@@ -12,14 +12,14 @@ const bubbleVariants = {
 
 export default function ChatBetMock() {
   return (
-    <div className="w-full max-w-sm rounded-[28px] border border-ink-border bg-ink-raised p-3 shadow-2xl shadow-black/40">
+    <div className="w-full max-w-sm rounded-[28px] border border-line bg-paper-raised p-3 shadow-2xl shadow-black/40">
       {/* fake chat header */}
-      <div className="flex items-center gap-2 border-b border-ink-border/70 px-2 pb-3">
+      <div className="flex items-center gap-2 border-b border-line/70 px-2 pb-3">
         <div className="flex -space-x-2">
-          {['bg-coin', 'bg-stake', 'bg-text-lo'].map((c, i) => (
+          {['bg-brand', 'bg-stake', 'bg-text-lo'].map((c, i) => (
             <span
               key={i}
-              className={`h-6 w-6 rounded-full border-2 border-ink-raised ${c}`}
+              className={`h-6 w-6 rounded-full border-2 border-paper-raised ${c}`}
             />
           ))}
         </div>
@@ -35,7 +35,7 @@ export default function ChatBetMock() {
           variants={bubbleVariants}
           initial="hidden"
           animate="show"
-          className="max-w-[80%] self-start rounded-2xl rounded-bl-sm bg-ink-card px-3 py-2 text-sm text-text-hi"
+          className="max-w-[80%] self-start rounded-2xl rounded-bl-sm bg-paper-card px-3 py-2 text-sm text-text-hi"
         >
           nah Arsenal are NOT winning today 💀
         </motion.div>
@@ -45,9 +45,9 @@ export default function ChatBetMock() {
           variants={bubbleVariants}
           initial="hidden"
           animate="show"
-          className="max-w-[80%] self-end rounded-2xl rounded-br-sm bg-coin-dim/40 px-3 py-2 text-sm text-text-hi"
+          className="max-w-[80%] self-end rounded-2xl rounded-br-sm bg-brand-dim/40 px-3 py-2 text-sm text-text-hi"
         >
-          bet. put your coins where your mouth is
+          bet. put your money where your mouth is
         </motion.div>
 
         <motion.div
@@ -57,7 +57,7 @@ export default function ChatBetMock() {
           animate="show"
           className="self-center"
         >
-          <span className="rounded-full bg-ink-card px-3 py-1 text-[11px] text-text-faint">
+          <span className="rounded-full bg-paper-card px-3 py-1 text-[11px] text-text-faint">
             Pool created from this chat
           </span>
         </motion.div>
@@ -68,19 +68,19 @@ export default function ChatBetMock() {
           variants={bubbleVariants}
           initial="hidden"
           animate="show"
-          className="mt-1 rounded-2xl border border-ink-border bg-ink-card p-4"
+          className="mt-1 rounded-2xl border border-line bg-paper-card p-4"
         >
           <p className="font-display text-sm font-semibold text-text-hi">
             Will Arsenal win today?
           </p>
 
           <div className="mt-3 flex items-center justify-between font-mono text-xs">
-            <span className="text-coin">YES · 64%</span>
+            <span className="text-brand">YES · 64%</span>
             <span className="text-stake">NO · 36%</span>
           </div>
-          <div className="mt-1.5 flex h-2 overflow-hidden rounded-full bg-ink-border">
+          <div className="mt-1.5 flex h-2 overflow-hidden rounded-full bg-line">
             <motion.span
-              className="h-full bg-coin"
+              className="h-full bg-brand"
               initial={{ width: 0 }}
               animate={{ width: '64%' }}
               transition={{ delay: 1.7, duration: 0.7, ease: 'easeOut' }}
@@ -95,17 +95,17 @@ export default function ChatBetMock() {
 
           <div className="mt-3 flex items-center justify-between">
             <div className="flex -space-x-1.5">
-              {['bg-coin', 'bg-stake', 'bg-text-lo', 'bg-ink-border'].map(
+              {['bg-brand', 'bg-stake', 'bg-text-lo', 'bg-line'].map(
                 (c, i) => (
                   <span
                     key={i}
-                    className={`h-5 w-5 rounded-full border-2 border-ink-card ${c}`}
+                    className={`h-5 w-5 rounded-full border-2 border-paper-card ${c}`}
                   />
                 ),
               )}
             </div>
             <span className="font-mono text-xs text-text-lo">
-              1,240 coins in the pot
+              ₦1,240 in the pot
             </span>
           </div>
         </motion.div>

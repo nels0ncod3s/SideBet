@@ -1,14 +1,75 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
+import { toPng } from 'html-to-image'
+import { Download, Loader2 } from 'lucide-react'
 import FormField from '../../components/auth/FormField'
 import { formatNaira } from '../../lib/currency'
 
 const categories = ['Sports', 'Pop culture', 'Weather', 'Friend group']
 
+function nowLocalISO() {
+  const d = new Date()
+  const tzOffset = d.getTimezoneOffset() * 60000
+  return new Date(d.getTime() - tzOffset).toISOString().slice(0, 16)
+}
+
+function closesLabel(datetimeStr) {
+  if (!datetimeStr) return null
+  const target = new Date(datetimeStr)
+  if (Number.isNaN(target.getTime())) return null
+  const diffMs = target.getTime() - Date.now()
+  if (diffMs <= 0) return 'Already past'
+
+  const mins = Math.round(diffMs / 60000)
+  if (mins < 60) return `Closes in ${mins}m`
+  const hours = Math.round(mins / 60)
+  if (hours < 48) return `Closes in ${hours}h`
+  const days = Math.round(hours / 24)
+  return `Closes in ${days}d`
+}
+
+function formattedDate(datetimeStr) {
+  if (!datetimeStr) return null
+  const target = new Date(datetimeStr)
+  if (Number.isNaN(target.getTime())) return null
+  return target.toLocaleString('en-NG', {
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  })
+}
+
 export default function CreatePool() {
   const [category, setCategory] = useState(categories[0])
   const [question, setQuestion] = useState('')
   const [stake, setStake] = useState('')
-  const [closesIn, setClosesIn] = useState('')
+  const [closesAt, setClosesAt] = useState('')
+  const [downloading, setDownloading] = useState(false)
+  const previewRef = useRef(null)
+
+  async function handleDownload() {
+    if (!previewRef.current) return
+    setDownloading(true)
+    try {
+      const dataUrl = await toPng(previewRef.current, {
+        cacheBust: true,
+        pixelRatio: 2,
+        backgroundColor: '#ffffff',
+      })
+      const link = document.createElement('a')
+      const safeName = (question || 'sidebet-pool')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .slice(0, 40)
+      link.download = `${safeName || 'sidebet-pool'}.png`
+      link.href = dataUrl
+      link.click()
+    } catch (err) {
+      console.error('Failed to export preview image', err)
+    } finally {
+      setDownloading(false)
+    }
+  }
 
   return (
     <div>
@@ -51,7 +112,7 @@ export default function CreatePool() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <FormField
               label="Stake per person (₦)"
               type="number"
@@ -61,11 +122,11 @@ export default function CreatePool() {
               required
             />
             <FormField
-              label="Closes in (hours)"
-              type="number"
-              placeholder="24"
-              value={closesIn}
-              onChange={(e) => setClosesIn(e.target.value)}
+              label="Market closes"
+              type="datetime-local"
+              min={nowLocalISO()}
+              value={closesAt}
+              onChange={(e) => setClosesAt(e.target.value)}
               required
             />
           </div>
@@ -82,10 +143,23 @@ export default function CreatePool() {
           <p className="mb-2 font-mono text-xs uppercase tracking-widest text-text-faint">
             Preview
           </p>
-          <div className="rounded-2xl border border-line bg-paper-raised p-5">
-            <span className="rounded-full bg-brand-dim/40 px-2.5 py-1 font-mono text-[11px] text-brand">
-              {category}
-            </span>
+
+          <div
+            ref={previewRef}
+            className="rounded-2xl border border-line bg-paper-raised p-5"
+          >
+            <div className="flex items-center justify-between">
+              <span className="rounded-full bg-brand-dim/40 px-2.5 py-1 font-mono text-[11px] text-brand">
+                {category}
+              </span>
+              <span className="flex items-center gap-1 text-xs font-semibold text-text-hi">
+                <span className="flex h-4 w-4 items-center justify-center rounded-full bg-brand text-[10px] font-bold text-white">
+                  S
+                </span>
+                SideBet
+              </span>
+            </div>
+
             <p className="mt-3 font-display text-lg font-medium leading-snug text-text-hi">
               {question || 'Your question shows up here as you type'}
             </p>
@@ -101,14 +175,31 @@ export default function CreatePool() {
 
             <div className="mt-4 flex items-center justify-between text-xs text-text-lo">
               <span>Stake: {stake ? formatNaira(stake) : '—'}</span>
-              <span>
-                Closes: {closesIn ? `${closesIn}h` : '—'}
-              </span>
+              <span>{closesLabel(closesAt) ?? '—'}</span>
             </div>
+            {closesAt && (
+              <p className="mt-1 text-right text-[11px] text-text-faint">
+                {formattedDate(closesAt)}
+              </p>
+            )}
           </div>
+
+          <button
+            type="button"
+            onClick={handleDownload}
+            disabled={downloading}
+            className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-line py-2.5 text-sm font-medium text-text-hi transition hover:bg-paper-card disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {downloading ? (
+              <Loader2 size={15} className="animate-spin" strokeWidth={2.25} />
+            ) : (
+              <Download size={15} strokeWidth={2.25} />
+            )}
+            {downloading ? 'Preparing image…' : 'Download preview to share'}
+          </button>
           <p className="mt-3 text-xs text-text-faint">
-            This is roughly what your friends will see when the link lands
-            in the chat.
+            Send this image to your friends before you commit to creating the
+            pool.
           </p>
         </div>
       </div>

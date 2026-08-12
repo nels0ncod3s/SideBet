@@ -1,7 +1,8 @@
 import { Link, useOutletContext } from 'react-router-dom'
-import { CirclePlus, TrendingUp } from 'lucide-react'
+import { CirclePlus, TrendingUp, Dice5 } from 'lucide-react'
 import StatCard from '../../components/dashboard/StatCard'
 import BetRow from '../../components/dashboard/BetRow'
+import EmptyState from '../../components/dashboard/EmptyState'
 import { formatNaira } from '../../lib/currency'
 
 const activeBets = [
@@ -44,11 +45,23 @@ export default function Overview() {
           <h2 className="font-display text-lg font-semibold text-text-hi">
             Active bets
           </h2>
-          <div className="mt-4 flex flex-col gap-3">
-            {activeBets.map((b) => (
-              <BetRow key={b.title} {...b} />
-            ))}
-          </div>
+          {activeBets.length === 0 ? (
+            <div className="mt-4">
+              <EmptyState
+                icon={Dice5}
+                title="No active bets"
+                subtitle="Pools you stake in will show up here while they're live."
+                actionLabel="Start a pool"
+                actionTo="/dashboard/create"
+              />
+            </div>
+          ) : (
+            <div className="mt-4 flex flex-col gap-3">
+              {activeBets.map((b) => (
+                <BetRow key={b.title} {...b} />
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col gap-4">
@@ -75,14 +88,20 @@ export default function Overview() {
               </p>
             </div>
             <div className="mt-3 flex flex-col divide-y divide-line">
-              {recentActivity.map((a) => (
-                <div key={a.label} className="flex flex-col py-3 first:pt-0 last:pb-0">
-                  <span className="text-sm text-text-hi">{a.label}</span>
-                  <span className="mt-0.5 text-xs text-text-faint">
-                    {a.time}
-                  </span>
-                </div>
-              ))}
+              {recentActivity.length === 0 ? (
+                <p className="py-3 text-xs text-text-lo">
+                  No activity yet — your bets and bonuses will land here.
+                </p>
+              ) : (
+                recentActivity.map((a) => (
+                  <div key={a.label} className="flex flex-col py-3 first:pt-0 last:pb-0">
+                    <span className="text-sm text-text-hi">{a.label}</span>
+                    <span className="mt-0.5 text-xs text-text-faint">
+                      {a.time}
+                    </span>
+                  </div>
+                ))
+              )}
             </div>
             <Link
               to="/dashboard/wallet"

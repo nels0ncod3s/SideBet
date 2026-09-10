@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import BottomNav from './BottomNav'
@@ -5,7 +6,7 @@ import { getSession } from '../../lib/mockAuth'
 import { formatNaira } from '../../lib/currency'
 
 export default function DashboardLayout() {
-  const session = getSession()
+  const [session, setSession] = useState(getSession)
 
   return (
     <div className="flex min-h-screen bg-paper">
@@ -32,7 +33,7 @@ export default function DashboardLayout() {
         </header>
 
         <main className="flex-1 px-5 pb-24 pt-6 md:px-8 md:pb-10">
-          <Outlet context={{ session }} />
+          <Outlet context={{ session, setSession }} />
         </main>
       </div>
 

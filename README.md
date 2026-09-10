@@ -1,16 +1,28 @@
-# React + Vite
+# SideBet
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+SideBet is a responsive play-money pool app for turning group-chat debates into simple yes-or-no markets.
 
-Currently, two official plugins are available:
+## Getting started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev
+```
 
-## React Compiler
+The development server prints the local URL to open in a browser.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Available checks
 
-## Expanding the Oxlint configuration
+```bash
+npm run lint
+npm run build
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Current scope
+
+- Landing page, account creation, and mock login
+- Authenticated overview, bets, pool creation, wallet, and settings screens
+- Browser-persisted profile, balance, and created pools
+- Downloadable pool-preview images for sharing
+
+SideBet is currently a front-end prototype. Authentication and data use browser storage; there is no backend, live settlement, or real-money payment flow. All displayed balances have no cash value.

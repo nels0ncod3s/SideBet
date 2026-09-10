@@ -53,11 +53,12 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.15 }}
           onSubmit={(e) => {
             e.preventDefault()
-            navigate('/signup')
+            navigate('/signup', { state: { question: prompt.trim() } })
           }}
           className="mt-8 flex items-center gap-2 rounded-2xl border border-line bg-paper-raised p-2 pl-4 focus-within:border-brand/60"
         >
           <input
+            aria-label="Pool question"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Will Arsenal win today?"

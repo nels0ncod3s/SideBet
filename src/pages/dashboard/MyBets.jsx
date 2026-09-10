@@ -1,16 +1,9 @@
 import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { Dice5 } from 'lucide-react'
 import BetCard from '../../components/dashboard/BetCard'
 import EmptyState from '../../components/dashboard/EmptyState'
-
-const bets = [
-  { title: 'Arsenal vs Chelsea', category: 'Sports', pool: 25000, yes: 64, myStake: 500, outcome: 'live' },
-  { title: 'Rain in Lagos today', category: 'Weather', pool: 10000, yes: 20, myStake: 100, outcome: 'live' },
-  { title: 'Osimhen scores before halftime', category: 'Sports', pool: 3120, yes: 71, myStake: 250, outcome: 'live' },
-  { title: 'Who gets evicted from BBN this Sunday?', category: 'Pop culture', pool: 2050, yes: 48, myStake: 200, outcome: 'live' },
-  { title: 'Does Tayo show up on time?', category: 'Friend group', pool: 480, yes: 35, myStake: 100, outcome: 'won', payout: 1200 },
-  { title: 'Rain before the owambe ends', category: 'Weather', pool: 260, yes: 58, myStake: 260, outcome: 'lost', payout: 260 },
-]
+import { getCreatedPools } from '../../lib/pools'
 
 const tabs = [
   { key: 'all', label: 'All' },
@@ -20,8 +13,10 @@ const tabs = [
 ]
 
 export default function MyBets() {
+  const location = useLocation()
   const [tab, setTab] = useState('all')
-  const filtered = tab === 'all' ? bets : bets.filter((b) => b.outcome === tab)
+  const allBets = getCreatedPools()
+  const filtered = tab === 'all' ? allBets : allBets.filter((b) => b.outcome === tab)
 
   return (
     <div>
@@ -32,10 +27,16 @@ export default function MyBets() {
         Every pool you've staked in, live and settled.
       </p>
 
+      {location.state?.message && (
+        <div role="status" className="mt-5 rounded-xl border border-win/30 bg-win-dim px-4 py-3 text-sm font-medium text-win">
+          {location.state.message}
+        </div>
+      )}
+
       <div className="mt-5 flex gap-1.5 overflow-x-auto">
         {tabs.map((t) => {
           const count =
-            t.key === 'all' ? bets.length : bets.filter((b) => b.outcome === t.key).length
+            t.key === 'all' ? allBets.length : allBets.filter((b) => b.outcome === t.key).length
           return (
             <button
               key={t.key}
@@ -64,7 +65,7 @@ export default function MyBets() {
         <div className="mt-6">
           <EmptyState
             icon={Dice5}
-            title={`No ${tab === 'all' ? '' : tab} bets yet`}
+            title={tab === 'all' ? 'No bets yet' : `No ${tab} bets yet`}
             subtitle="Once you stake in a pool, it'll show up here."
             actionLabel="Start a pool"
             actionTo="/dashboard/create"
@@ -73,7 +74,7 @@ export default function MyBets() {
       ) : (
         <div className="mt-6 grid grid-cols-1 gap-3 lg:grid-cols-2">
           {filtered.map((b, i) => (
-            <BetCard key={b.title} {...b} index={i} />
+            <BetCard key={b.id ?? b.title} {...b} index={i} />
           ))}
         </div>
       )}

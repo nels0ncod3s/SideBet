@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useOutletContext, useNavigate } from 'react-router-dom'
+import { useOutletContext } from 'react-router-dom'
 import {
   ArrowDownToLine,
   ArrowUpFromLine,
@@ -13,14 +13,7 @@ import Modal from '../../components/Modal'
 import EmptyState from '../../components/dashboard/EmptyState'
 import { addCoins } from '../../lib/mockAuth'
 import { formatNaira } from '../../lib/currency'
-
-const transactions = [
-  { label: 'Staked — Arsenal vs Chelsea', amount: -500, time: '2h ago', type: 'stake' },
-  { label: 'Won — Osimhen scores', amount: 1200, time: '1d ago', type: 'win' },
-  { label: 'Staked — Rain in Lagos today', amount: -100, time: '2d ago', type: 'stake' },
-  { label: 'Daily bonus', amount: 50, time: '2d ago', type: 'bonus' },
-  { label: 'Lost — Owambe rain bet', amount: -260, time: '4d ago', type: 'loss' },
-]
+import { addTransaction, getTransactions } from '../../lib/transactions'
 
 const typeStyles = {
   stake: { icon: ArrowUpRight, iconClass: 'bg-paper-card text-text-lo' },
@@ -32,19 +25,24 @@ const typeStyles = {
 const depositPresets = [500, 1000, 2000, 5000, 10000]
 
 export default function WalletPage() {
-  const { session } = useOutletContext()
-  const navigate = useNavigate()
+  const { session, setSession } = useOutletContext()
   const [depositOpen, setDepositOpen] = useState(false)
   const [withdrawOpen, setWithdrawOpen] = useState(false)
   const [customAmount, setCustomAmount] = useState('')
+  const [transactions, setTransactions] = useState(getTransactions)
 
   function handleDeposit(amount) {
     if (!amount || amount <= 0) return
-    addCoins(amount)
+    const updated = addCoins(amount)
+    const transaction = addTransaction({
+      label: 'Play-money top-up',
+      amount,
+      type: 'bonus',
+    })
+    setSession(updated)
+    setTransactions((current) => [transaction, ...current])
     setDepositOpen(false)
     setCustomAmount('')
-    // no global state store yet, so refresh the route to pull the new balance
-    navigate(0)
   }
 
   function closeDepositModal() {
@@ -120,7 +118,7 @@ export default function WalletPage() {
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm text-text-hi">{t.label}</p>
                     <p className="mt-0.5 font-mono text-xs text-text-faint">
-                      {t.time}
+                      Just now
                     </p>
                   </div>
 

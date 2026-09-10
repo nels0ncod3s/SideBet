@@ -1,17 +1,21 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import AuthLayout from '../components/auth/AuthLayout'
 import FormField from '../components/auth/FormField'
 import { createSession } from '../lib/mockAuth'
 
 export default function Signup() {
   const navigate = useNavigate()
+  const location = useLocation()
 
   function handleSubmit(e) {
     e.preventDefault()
     const name = e.target.elements.name?.value
     const email = e.target.elements.email?.value
-    createSession({ name: name || 'You', phone: email })
-    navigate('/dashboard')
+    createSession({ name: name || 'You', email })
+    navigate(location.state?.question ? '/dashboard/create' : '/dashboard', {
+      replace: true,
+      state: location.state,
+    })
   }
 
   return (
@@ -46,10 +50,12 @@ export default function Signup() {
         />
         <FormField
           label="Password"
+          name="password"
           type="password"
           placeholder="At least 8 characters"
           autoComplete="new-password"
           required
+          minLength={8}
         />
 
         <button

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
 import FormField from '../../components/auth/FormField'
+import { updateSession } from '../../lib/mockAuth'
 
 function Toggle({ label, description, defaultOn = false }) {
   const [on, setOn] = useState(defaultOn)
@@ -32,7 +33,10 @@ function Toggle({ label, description, defaultOn = false }) {
 }
 
 export default function SettingsPage() {
-  const { session } = useOutletContext()
+  const { session, setSession } = useOutletContext()
+  const [name, setName] = useState(session?.name ?? '')
+  const [email, setEmail] = useState(session?.email ?? session?.phone ?? '')
+  const [saved, setSaved] = useState(false)
   const joined = session?.joinedAt
     ? new Date(session.joinedAt).toLocaleDateString('en-NG', {
         month: 'long',
@@ -50,22 +54,51 @@ export default function SettingsPage() {
           Manage your profile and notifications.
         </p>
 
-        <div className="mt-6 flex flex-col gap-4 rounded-2xl border border-line bg-paper-raised p-5">
-          <FormField label="Display name" defaultValue={session?.name ?? ''} />
+        <form
+          className="mt-6 flex flex-col gap-4 rounded-2xl border border-line bg-paper-raised p-5"
+          onSubmit={(event) => {
+            event.preventDefault()
+            const updated = updateSession({
+              name: name.trim(),
+              email: email.trim(),
+            })
+            setSession(updated)
+            setSaved(true)
+          }}
+        >
+          <FormField
+            label="Display name"
+            value={name}
+            onChange={(event) => {
+              setName(event.target.value)
+              setSaved(false)
+            }}
+            required
+          />
           <FormField
             label="Email"
             type="email"
-            defaultValue={session?.phone ?? ''}
+            value={email}
+            onChange={(event) => {
+              setEmail(event.target.value)
+              setSaved(false)
+            }}
+            required
           />
-          <div>
+          <div className="flex items-center gap-3">
             <button
-              type="button"
+              type="submit"
               className="rounded-xl bg-brand px-5 py-2.5 text-sm font-semibold text-white transition hover:brightness-110"
             >
               Save changes
             </button>
+            {saved && (
+              <span role="status" className="text-sm text-win">
+                Saved
+              </span>
+            )}
           </div>
-        </div>
+        </form>
 
         <div className="mt-6 divide-y divide-line rounded-2xl border border-line bg-paper-raised px-5">
           <Toggle
@@ -91,7 +124,7 @@ export default function SettingsPage() {
             Account
           </p>
           <p className="mt-2 text-sm font-medium text-text-hi">
-            {session?.name ?? 'You'}
+            {name || 'You'}
           </p>
           {joined && (
             <p className="mt-0.5 text-xs text-text-lo">Joined {joined}</p>

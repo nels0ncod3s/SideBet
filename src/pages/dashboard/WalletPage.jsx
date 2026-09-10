@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useOutletContext, useNavigate } from 'react-router-dom'
+import { useOutletContext } from 'react-router-dom'
 import {
   ArrowDownToLine,
   ArrowUpFromLine,
@@ -32,19 +32,17 @@ const typeStyles = {
 const depositPresets = [500, 1000, 2000, 5000, 10000]
 
 export default function WalletPage() {
-  const { session } = useOutletContext()
-  const navigate = useNavigate()
+  const { session, setSession } = useOutletContext()
   const [depositOpen, setDepositOpen] = useState(false)
   const [withdrawOpen, setWithdrawOpen] = useState(false)
   const [customAmount, setCustomAmount] = useState('')
 
   function handleDeposit(amount) {
     if (!amount || amount <= 0) return
-    addCoins(amount)
+    const updated = addCoins(amount)
+    setSession(updated)
     setDepositOpen(false)
     setCustomAmount('')
-    // no global state store yet, so refresh the route to pull the new balance
-    navigate(0)
   }
 
   function closeDepositModal() {

@@ -9,10 +9,10 @@ export function getSession() {
   }
 }
 
-export function createSession({ phone, name }) {
+export function createSession({ email, phone, name }) {
   const session = {
     name: name || 'You',
-    phone,
+    email: email ?? phone,
     coins: 1000,
     joinedAt: Date.now(),
   }
@@ -28,6 +28,14 @@ export function addCoins(amount) {
   const session = getSession()
   if (!session) return null
   const updated = { ...session, coins: (session.coins ?? 0) + amount }
+  localStorage.setItem(KEY, JSON.stringify(updated))
+  return updated
+}
+
+export function updateSession(changes) {
+  const session = getSession()
+  if (!session) return null
+  const updated = { ...session, ...changes }
   localStorage.setItem(KEY, JSON.stringify(updated))
   return updated
 }

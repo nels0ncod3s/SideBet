@@ -11,7 +11,7 @@ export default function Login() {
     e.preventDefault()
     // no backend yet — mock a session so the dashboard has something to gate on
     const email = e.target.elements.email?.value
-    createSession({ name: email?.split('@')[0] || 'You', phone: email })
+    createSession({ name: email?.split('@')[0] || 'You', email })
     navigate('/dashboard')
   }
 
@@ -40,6 +40,7 @@ export default function Login() {
         />
         <FormField
           label="Password"
+          name="password"
           type="password"
           placeholder="••••••••"
           autoComplete="current-password"

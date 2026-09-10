@@ -4,6 +4,7 @@ import StatCard from '../../components/dashboard/StatCard'
 import BetRow from '../../components/dashboard/BetRow'
 import EmptyState from '../../components/dashboard/EmptyState'
 import { formatNaira } from '../../lib/currency'
+import { getCreatedPools } from '../../lib/pools'
 
 const activeBets = [
   { title: 'Arsenal vs Chelsea', pool: '25,000', yes: 64 },
@@ -19,6 +20,11 @@ const recentActivity = [
 
 export default function Overview() {
   const { session } = useOutletContext()
+  const userPools = getCreatedPools()
+  const displayedBets = [
+    ...userPools.map(({ id, title, pool, yes }) => ({ id, title, pool, yes })),
+    ...activeBets,
+  ]
 
   return (
     <div>
@@ -31,7 +37,7 @@ export default function Overview() {
       </p>
 
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <StatCard label="Active pools" value="3 pending" />
+        <StatCard label="Active pools" value={`${displayedBets.length} pending`} />
         <StatCard
           label="Wallet balance"
           value={formatNaira(session?.coins)}
@@ -45,7 +51,7 @@ export default function Overview() {
           <h2 className="font-display text-lg font-semibold text-text-hi">
             Active bets
           </h2>
-          {activeBets.length === 0 ? (
+          {displayedBets.length === 0 ? (
             <div className="mt-4">
               <EmptyState
                 icon={Dice5}
@@ -57,8 +63,8 @@ export default function Overview() {
             </div>
           ) : (
             <div className="mt-4 flex flex-col gap-3">
-              {activeBets.map((b) => (
-                <BetRow key={b.title} {...b} />
+              {displayedBets.map((b) => (
+                <BetRow key={b.id ?? b.title} {...b} />
               ))}
             </div>
           )}

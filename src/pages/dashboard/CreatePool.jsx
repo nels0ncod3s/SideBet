@@ -1,8 +1,10 @@
 import { useState, useRef } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { toPng } from 'html-to-image'
 import { Download, Loader2 } from 'lucide-react'
 import FormField from '../../components/auth/FormField'
 import { formatNaira } from '../../lib/currency'
+import { createPool } from '../../lib/pools'
 
 const categories = ['Sports', 'Pop culture', 'Weather', 'Friend group']
 
@@ -40,12 +42,25 @@ function formattedDate(datetimeStr) {
 }
 
 export default function CreatePool() {
+  const location = useLocation()
+  const navigate = useNavigate()
   const [category, setCategory] = useState(categories[0])
-  const [question, setQuestion] = useState('')
+  const [question, setQuestion] = useState(location.state?.question ?? '')
   const [stake, setStake] = useState('')
   const [closesAt, setClosesAt] = useState('')
   const [downloading, setDownloading] = useState(false)
   const previewRef = useRef(null)
+
+  function handleSubmit(event) {
+    event.preventDefault()
+    const form = event.currentTarget
+    if (!form.reportValidity()) return
+    const pool = createPool({ question, category, stake, closesAt })
+    navigate('/dashboard/bets', {
+      replace: true,
+      state: { message: `“${pool.title}” is live and ready to share.` },
+    })
+  }
 
   async function handleDownload() {
     if (!previewRef.current) return
@@ -81,12 +96,13 @@ export default function CreatePool() {
       </p>
 
       <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[1fr_320px]">
-        <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-5">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           <FormField
             label="Question"
             placeholder="Will Arsenal win today?"
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
+            maxLength={140}
             required
           />
 
@@ -119,6 +135,8 @@ export default function CreatePool() {
               placeholder="100"
               value={stake}
               onChange={(e) => setStake(e.target.value)}
+              min="1"
+              step="1"
               required
             />
             <FormField
@@ -135,7 +153,7 @@ export default function CreatePool() {
             type="submit"
             className="mt-2 w-full rounded-xl bg-brand py-3 text-sm font-semibold text-white transition hover:brightness-110 sm:w-fit sm:px-8"
           >
-            Create pool & get link
+            Create pool
           </button>
         </form>
 

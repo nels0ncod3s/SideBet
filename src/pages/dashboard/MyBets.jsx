@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { Dice5 } from 'lucide-react'
 import BetCard from '../../components/dashboard/BetCard'
 import EmptyState from '../../components/dashboard/EmptyState'
+import { getCreatedPools } from '../../lib/pools'
 
 const bets = [
   { title: 'Arsenal vs Chelsea', category: 'Sports', pool: 25000, yes: 64, myStake: 500, outcome: 'live' },
@@ -20,8 +22,10 @@ const tabs = [
 ]
 
 export default function MyBets() {
+  const location = useLocation()
   const [tab, setTab] = useState('all')
-  const filtered = tab === 'all' ? bets : bets.filter((b) => b.outcome === tab)
+  const allBets = [...getCreatedPools(), ...bets]
+  const filtered = tab === 'all' ? allBets : allBets.filter((b) => b.outcome === tab)
 
   return (
     <div>
@@ -32,10 +36,16 @@ export default function MyBets() {
         Every pool you've staked in, live and settled.
       </p>
 
+      {location.state?.message && (
+        <div role="status" className="mt-5 rounded-xl border border-win/30 bg-win-dim px-4 py-3 text-sm font-medium text-win">
+          {location.state.message}
+        </div>
+      )}
+
       <div className="mt-5 flex gap-1.5 overflow-x-auto">
         {tabs.map((t) => {
           const count =
-            t.key === 'all' ? bets.length : bets.filter((b) => b.outcome === t.key).length
+            t.key === 'all' ? allBets.length : allBets.filter((b) => b.outcome === t.key).length
           return (
             <button
               key={t.key}
@@ -73,7 +83,7 @@ export default function MyBets() {
       ) : (
         <div className="mt-6 grid grid-cols-1 gap-3 lg:grid-cols-2">
           {filtered.map((b, i) => (
-            <BetCard key={b.title} {...b} index={i} />
+            <BetCard key={b.id ?? b.title} {...b} index={i} />
           ))}
         </div>
       )}
